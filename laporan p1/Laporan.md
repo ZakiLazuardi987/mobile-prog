@@ -9,9 +9,11 @@
 # Tugas Praktikum
 ### Soal 1
 Modifikasilah kode pada baris 3 di VS Code atau Editor Code favorit Anda berikut ini agar mendapatkan keluaran (output) sesuai yang diminta!
+
 ![alt text](image.png)
 
 Output yang diminta : 
+
 ![alt text](image-1.png)
 
 <b>Jawab : </b> 
