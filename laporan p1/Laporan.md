@@ -27,6 +27,7 @@ void main() {
 }
 ```
 - Hasil :
+
 ![alt text](image-2.png)
 
 ### Soal 2
