@@ -296,25 +296,89 @@ Future handleError() async {
 
 ## Praktikum 6 : Menggunakan Future dengan StatefulWidget
 ### Langkah 1 : Install plugin geolocator
+```dart
+flutter pub add geolocator
+```
 
 ### Langkah 2 : Tambah permission GPS
+```dart
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+```
 
 ### Langkah 3 : Buat file geolocation.dart
 
+![alt text](image-13.png)
+
 ### Langkah 4 : Buat StatefulWidget
 
+![alt text](image-14.png)
+
 ### Langkah 5 : Isi kode geolocation.dart
+```dart
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+
+class LocationScreen extends StatefulWidget {
+  const LocationScreen({super.key});
+
+  @override
+  State<LocationScreen> createState() => _LocationScreenState();
+}
+
+class _LocationScreenState extends State<LocationScreen> {
+  String myPosition = '';
+  @override
+  void initState() {
+    super.initState();
+    getPosition().then((Position myPos) {
+      myPosition =
+          'Latitude: ${myPos.latitude.toString()} - Longitude: ${myPos.longitude.toString()}';
+      setState(() {
+        myPosition = myPosition;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Current Location')),
+      body: Center(child: Text(myPosition)),
+    );
+  }
+
+  Future<Position> getPosition() async {
+    await Geolocator.requestPermission();
+    await Geolocator.isLocationServiceEnabled();
+    Position? position =
+        await Geolocator.getCurrentPosition();
+    return position;
+  }
+}
+```
 
     Soal 11
     Tambahkan nama panggilan Anda pada tiap properti title sebagai identitas pekerjaan Anda.
 
 ### Langkah 6 : Edit main.dart
+```dart
+home: LocationScreen(),
+```
 
 ### Langkah 7 : Run
 
+![alt text](image-15.png)
+
 ### Langkah 8 : Tambahkan animasi loading
+```dart
+
+```
 
     Soal 12
     Jika Anda tidak melihat animasi loading tampil, kemungkinan itu berjalan sangat cepat. Tambahkan delay pada method getPosition() dengan kode await Future.delayed(const Duration(seconds: 3));
     Apakah Anda mendapatkan koordinat GPS ketika run di browser? Mengapa demikian?
     Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W12: Soal 12".
+
+    - Jawab :
+    Pada aplikasi Flutter, akses terhadap koordinat GPS menggunakan geolocator hanya dapat berfungsi pada perangkat yang memiliki akses ke fitur lokasi, seperti ponsel atau emulator Android/iOS dengan izin lokasi yang sesuai. Karena browser tidak memiliki akses langsung ke perangkat keras lokasi (GPS), aplikasi ini tidak dapat mengambil data GPS saat dijalankan di browser. Oleh karena itu, ketika dijalankan di browser, aplikasi tidak akan memperoleh koordinat sebenarnya.
