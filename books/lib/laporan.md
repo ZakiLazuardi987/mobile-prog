@@ -382,3 +382,76 @@ home: LocationScreen(),
 
     - Jawab :
     Pada aplikasi Flutter, akses terhadap koordinat GPS menggunakan geolocator hanya dapat berfungsi pada perangkat yang memiliki akses ke fitur lokasi, seperti ponsel atau emulator Android/iOS dengan izin lokasi yang sesuai. Karena browser tidak memiliki akses langsung ke perangkat keras lokasi (GPS), aplikasi ini tidak dapat mengambil data GPS saat dijalankan di browser. Oleh karena itu, ketika dijalankan di browser, aplikasi tidak akan memperoleh koordinat sebenarnya.
+
+## Praktikum 7 : Manajemen Future dengan FutureBuilder
+### Langkah 1 : Modifikasi method getPosition()
+```dart
+Future<Position> getPosition() async {
+    await Geolocator.isLocationServiceEnabled();
+    await Future.delayed(const Duration(seconds: 3));
+    Position position = await Geolocator.getCurrentPosition();
+    return position;
+  }
+```
+
+### Langkah 2 : Tambah variabel
+```dart
+Future<Position>? position;
+```
+
+### Langkah 3 : Tambah initState()
+```dart
+@override
+  void initState() {
+    super.initState();
+    position = getPosition();
+  }
+```
+
+### Langkah 4 : Edit method build()
+```dart
+@override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Current Location Zaki')),
+      body: Center(
+        child: FutureBuilder(
+          future: position,
+          builder: (BuildContext context, AsyncSnapshot<Position>snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            }
+            else if (snapshot.connectionState == ConnectionState.done) {
+              return Text(snapshot.data.toString());
+            }
+            else {
+              return const Text('');
+            }
+          },
+        ),
+      ),
+    );
+  }
+```
+
+  Soal 13
+  Apakah ada perbedaan UI dengan praktikum sebelumnya? Mengapa demikian?
+  Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W12: Soal 13".
+  Seperti yang Anda lihat, menggunakan FutureBuilder lebih efisien, clean, dan reactive dengan Future bersama UI.
+
+  - Jawab:
+  Pada langkah 4, menggunakan FutureBuilder, kita dapat memperoleh data GPS secara bersamaan dengan UI.
+
+### Langkah 5 : Tambah handling error
+```dart
+else if (snapshot.connectionState == ConnectionState.done) {
+  if (snapshot.hasError) {
+     return Text('Something terrible happened!');
+  }
+  return Text(snapshot.data.toString());
+}
+```
+
+  Soal 14
+  Apakah ada perbedaan UI dengan langkah sebelumnya? Mengapa demikian?
+  Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W12: Soal 14".
