@@ -145,7 +145,17 @@ onPressed: () async {
 
 ### Langkah 5 : Ganti method calculate()
 ```dart
-
+Future calculate() async {
+    // await Future.delayed(const Duration(seconds : 5));
+    // completer.complete(42);
+    try {
+      await new Future.delayed(const Duration(seconds : 5));
+      completer.complete(42);
+    }
+    catch(_) {
+      completer.completeError({});
+    }
+  }
 ```
 
 ### Langkah 6 : Pindah ke onPressed()
@@ -162,3 +172,94 @@ getNumber().then((value) {
     Soal 6
     Jelaskan maksud perbedaan kode langkah 2 dengan langkah 5-6 tersebut!
     Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W12: Soal 6".
+
+    - Jawab :
+    Perbedaan utama antara langkah 2 dan langkah 5-6 adalah penambahan mekanisme penanganan error pada calculate() dan penggunaan catchError untuk menangani error tersebut di onPressed(). Di langkah 5, kode calculate() diperbarui dengan menambahkan blok try-catch untuk menangkap kemungkinan error selama proses asinkron berlangsung. Jika berhasil, completer.complete(42); tetap dipanggil setelah 5 detik; namun, jika terjadi error, completer.completeError({}); dipanggil untuk menandakan bahwa Future berakhir dengan error. Pada langkah 6, onPressed() ditambahkan dengan pemanggilan getNumber(), diikuti oleh then() untuk menampilkan hasil dalam UI jika sukses, dan catchError() untuk menangani error dengan menampilkan pesan 'An error occurred' jika Future gagal.
+
+## Praktikum 4 : Memanggil Future secara paralel
+### Langkah 1 : Buka file main.dart
+```dart
+void returnFG() {
+    FutureGroup<int> futureGroup = FutureGroup<int>();
+    futureGroup.add(returnOneAsync());
+    futureGroup.add(returnTwoAsync());
+    futureGroup.add(returnThreeAsync());
+    futureGroup.close();
+    futureGroup.future.then((List <int> value) {
+      int total = 0;
+      for (var element in value) {
+        total += element;
+      }
+      setState(() {
+        result = total.toString();
+      });
+    });
+  }
+```
+
+### Langkah 2 : Edit onPressed()
+```dart
+onPressed: () async {
+                returnFG();
+              },
+```
+
+### Langkah 3 : Run
+Anda akan melihat hasilnya dalam 3 detik berupa angka 6 lebih cepat dibandingkan praktikum sebelumnya menunggu sampai 9 detik.
+
+![alt text](image-10.png)
+
+    Soal 7
+    Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W12: Soal 7
+
+### Langkah 4 : Ganti variabel futureGroup
+```dart
+final futures = Future.wait<int>([
+  returnOneAsync(),
+  returnTwoAsync(),
+  returnThreeAsync(),
+]);
+```
+
+    Soal 8
+    Jelaskan maksud perbedaan kode langkah 1 dan 4!
+
+## Praktikum 5 : Menangani Respon Error pada Async Code
+### Langkah 1 : Buka file main.dart
+
+### Langkah 2 : ElevatedButton
+
+### Langkah 3 : Run
+
+    Soal 9
+    Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W12: Soal 9".
+
+### Langkah 4 : Tambah method handleError()
+
+    Soal 10
+    Panggil method handleError() tersebut di ElevatedButton, lalu run. Apa hasilnya? Jelaskan perbedaan kode langkah 1 dan 4!
+
+## Praktikum 6 : Menggunakan Future dengan StatefulWidget
+### Langkah 1 : Install plugin geolocator
+
+### Langkah 2 : Tambah permission GPS
+
+### Langkah 3 : Buat file geolocation.dart
+
+### Langkah 4 : Buat StatefulWidget
+
+### Langkah 5 : Isi kode geolocation.dart
+
+    Soal 11
+    Tambahkan nama panggilan Anda pada tiap properti title sebagai identitas pekerjaan Anda.
+
+### Langkah 6 : Edit main.dart
+
+### Langkah 7 : Run
+
+### Langkah 8 : Tambahkan animasi loading
+
+    Soal 12
+    Jika Anda tidak melihat animasi loading tampil, kemungkinan itu berjalan sangat cepat. Tambahkan delay pada method getPosition() dengan kode await Future.delayed(const Duration(seconds: 3));
+    Apakah Anda mendapatkan koordinat GPS ketika run di browser? Mengapa demikian?
+    Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W12: Soal 12".
