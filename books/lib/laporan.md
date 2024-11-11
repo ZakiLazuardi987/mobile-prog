@@ -98,3 +98,67 @@ ElevatedButton(
     Pada Langkah 1, tiga fungsi asinkron (returnOneAsync, returnTwoAsync, dan returnThreeAsync) didefinisikan. Setiap fungsi ini akan menunggu selama 3 detik menggunakan Future.delayed, kemudian mengembalikan nilai integer (masing-masing 1, 2, dan 3). Fungsi-fungsi ini dibuat untuk mensimulasikan proses yang memakan waktu, seperti pengambilan data dari internet atau operasi berat lainnya.
 
     Di Langkah 2, fungsi count() ditambahkan. Fungsi ini bekerja secara asinkron untuk menghitung nilai total dari ketiga fungsi pada Langkah 1. Mula-mula, total diinisialisasi dengan nilai 0. Kemudian, total diupdate secara bertahap dengan menambahkan hasil dari returnOneAsync(), returnTwoAsync(), dan returnThreeAsync() yang masing-masing ditunggu dengan await hingga selesai. Setelah semua nilai dijumlahkan, setState() dipanggil untuk memperbarui tampilan UI dengan result yang diisi nilai total hasil penjumlahan tersebut, dalam bentuk string.
+
+## Praktikum 3 : Menggunakan Completer di Future
+### Langkah 1 : Buka main.dart
+```dart
+import 'package:async/async.dart';
+```
+
+### Langkah 2 : Tambahkan variabel dan method
+```dart
+late Completer completer;
+
+Future getNumber() {
+  completer = Completer<int>();
+  calculate();
+  return completer.future;
+}
+
+Future calculate() async {
+  await Future.delayed(const Duration(seconds : 5));
+  completer.complete(42);
+}
+```
+
+### Langkah 3 : Ganti isi kode onPressed()
+```dart
+onPressed: () async {
+                getNumber().then((value) {
+                  setState(() {
+                    result = value.toString();
+                  });
+                });
+              },
+```
+
+### Langkah 4 : Run
+
+![alt text](image-9.png)
+
+    Soal 5
+    Jelaskan maksud kode langkah 2 tersebut!
+    Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W12: Soal 5".
+
+    - Jawab:
+    Pada langkah 2, kode menggunakan Completer untuk mengatur kapan sebuah Future selesai. Ketika getNumber() dipanggil, ia membuat Completer<int> dan mengembalikan completer.future, yaitu Future yang nantinya akan diselesaikan secara manual. Fungsi calculate() kemudian dijalankan secara asinkron, menunggu selama 5 detik menggunakan Future.delayed. Setelah penundaan selesai, completer.complete(42); dipanggil untuk menyelesaikan Future dengan nilai 42, sehingga siapa pun yang menunggu getNumber() akan menerima nilai 42 setelah proses selesai.
+
+### Langkah 5 : Ganti method calculate()
+```dart
+
+```
+
+### Langkah 6 : Pindah ke onPressed()
+```dart
+getNumber().then((value) {
+  setState(() {
+    result = value.toString();
+  });
+}).catchError((e) {
+  result = 'An error occurred';
+});
+```
+
+    Soal 6
+    Jelaskan maksud perbedaan kode langkah 2 dengan langkah 5-6 tersebut!
+    Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W12: Soal 6".
