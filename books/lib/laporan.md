@@ -440,7 +440,7 @@ Future<Position>? position;
   Seperti yang Anda lihat, menggunakan FutureBuilder lebih efisien, clean, dan reactive dengan Future bersama UI.
 
   - Jawab:
-  Pada langkah 4, menggunakan FutureBuilder, kita dapat memperoleh data GPS secara bersamaan dengan UI.
+  Pada Langkah 4, Anda menggunakan FutureBuilder untuk menunggu hasil dari position (yang merupakan Future<Position>) dan menampilkan status berdasarkan hasil tersebut. Perbedaan utama dibandingkan dengan praktikum sebelumnya adalah penggunaan FutureBuilder yang lebih terstruktur dalam menangani status Future daripada menggunakan metode manual dengan setState untuk memperbarui UI.
 
 ### Langkah 5 : Tambah handling error
 ```dart
@@ -455,3 +455,7 @@ else if (snapshot.connectionState == ConnectionState.done) {
   Soal 14
   Apakah ada perbedaan UI dengan langkah sebelumnya? Mengapa demikian?
   Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W12: Soal 14".
+
+  - Jawab :
+
+    Pada Langkah 5, penambahan penanganan error dengan menggunakan snapshot.hasError di dalam FutureBuilder memberikan kemampuan untuk menangani dan menampilkan pesan error jika terjadi masalah selama pengambilan data asinkron (misalnya, kesalahan saat meminta izin lokasi atau jika layanan lokasi tidak tersedia).
