@@ -270,11 +270,29 @@ returnError()
 
 ### Langkah 4 : Tambah method handleError()
 ```dart
-
+Future handleError() async {
+    try {
+      await returnError();
+    }
+    catch(onError) {
+      setState(() {
+        result = onError.toString();
+      });
+    }
+    finally {
+      print('Complete');
+    }
+  }
 ```
 
     Soal 10
     Panggil method handleError() tersebut di ElevatedButton, lalu run. Apa hasilnya? Jelaskan perbedaan kode langkah 1 dan 4!
+
+    - Jawab: 
+
+    ![alt text](image-12.png)
+
+    Perbedaan utama antara langkah 1 dan langkah 4 adalah penambahan mekanisme penanganan error pada method handleError() dan penggunaan catchError untuk menangani error tersebut di onPressed().
 
 ## Praktikum 6 : Menggunakan Future dengan StatefulWidget
 ### Langkah 1 : Install plugin geolocator
