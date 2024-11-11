@@ -240,15 +240,38 @@ void returnFG() {
 
 ## Praktikum 5 : Menangani Respon Error pada Async Code
 ### Langkah 1 : Buka file main.dart
+```dart
+Future returnError() async {
+    await Future.delayed(const Duration(seconds: 2));
+    throw Exception('Something terrible happened!');
+  }
+```
 
 ### Langkah 2 : ElevatedButton
+```dart
+returnError() 
+                  .then((value) {
+                    setState(() {
+                      result = 'Success';
+                    });
+                  }).catchError((onError) {
+                    setState(() {
+                      result = onError.toString();
+                    });
+                  }).whenComplete(() => print('Complete'));
+```
 
 ### Langkah 3 : Run
+
+![alt text](image-11.png)
 
     Soal 9
     Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W12: Soal 9".
 
 ### Langkah 4 : Tambah method handleError()
+```dart
+
+```
 
     Soal 10
     Panggil method handleError() tersebut di ElevatedButton, lalu run. Apa hasilnya? Jelaskan perbedaan kode langkah 1 dan 4!
