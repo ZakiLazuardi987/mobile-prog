@@ -214,15 +214,29 @@ Anda akan melihat hasilnya dalam 3 detik berupa angka 6 lebih cepat dibandingkan
 
 ### Langkah 4 : Ganti variabel futureGroup
 ```dart
-final futures = Future.wait<int>([
-  returnOneAsync(),
-  returnTwoAsync(),
-  returnThreeAsync(),
-]);
+void returnFG() {
+    final futures = Future.wait<int>([
+      returnOneAsync(),
+      returnTwoAsync(),
+      returnThreeAsync(),
+    ]);
+    futures.then((List <int> value) {
+      int total = 0;
+      for (var element in value) {
+        total += element;
+      }
+      setState(() {
+        result = total.toString();
+      });
+    });
+  }
 ```
 
     Soal 8
     Jelaskan maksud perbedaan kode langkah 1 dan 4!
+
+    - Jawab:
+    Perbedaan utama antara langkah 1 dan langkah 4 terletak pada cara mengelola dan menunggu beberapa Future untuk diselesaikan. Pada langkah 1, kode menggunakan FutureGroup<int>, yang memungkinkan penambahan Future satu per satu dan menutup grup dengan close() agar semua Future dalam grup dijalankan dan diselesaikan. Setelah semua Future selesai, hasilnya digabungkan dalam sebuah list value. Di langkah 4, Future.wait<int> digunakan sebagai gantinya, yang membuat sebuah list Future dan menjalankan semuanya secara bersamaan, lalu menunggu hingga semua Future selesai sebelum mengembalikan hasil dalam bentuk list value. Kedua pendekatan mengumpulkan hasil dari setiap Future dan menjumlahkan nilainya untuk ditampilkan di UI, namun Future.wait lebih sederhana untuk menangani beberapa Future sekaligus tanpa memerlukan penutupan grup secara manual.
 
 ## Praktikum 5 : Menangani Respon Error pada Async Code
 ### Langkah 1 : Buka file main.dart
