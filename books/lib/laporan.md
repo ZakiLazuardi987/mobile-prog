@@ -29,6 +29,15 @@
 ![alt text](image-3.png)
 
 ### Langkah 5 : Tambah kode di ElevatedButton
+![alt text](image-4.png)
+
+- Hasil
+
+![alt text](image-5.png)
+
     Soal 3
     Jelaskan maksud kode langkah 5 tersebut terkait substring dan catchError!
     Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W12: Soal 3".
+
+    Jawab:
+    Langkah kelima pada kode di atas menggunakan substring untuk membatasi hasil data yang ditampilkan hanya sampai 450 karakter pertama, yang diambil dari value.body setelah dikonversi menjadi string. Hal ini berguna untuk mencegah tampilan data yang terlalu panjang. Selain itu, catchError digunakan untuk menangani kemungkinan error selama pemanggilan getData(). Jika terjadi error, blok ini akan mengatur variabel result dengan pesan 'An error occurred', dan memanggil setState() agar UI dapat diperbarui sesuai dengan pesan error tersebut.
