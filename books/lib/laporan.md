@@ -583,8 +583,6 @@ home: const NavigationFirst(),
 
 ![alt text](image-16.png)
 
-
-
   Soal 16
   Cobalah klik setiap button, apa yang terjadi ? Mengapa demikian ?
   Gantilah 3 warna pada langkah 5 dengan warna favorit Anda!
@@ -594,3 +592,103 @@ home: const NavigationFirst(),
     Ketika kamu mengklik tombol di **NavigationSecond**, seperti tombol "Orange", "Cyan", atau "Lime", setiap tombol akan mengubah nilai variabel **color** menjadi warna tertentu (misalnya `Colors.orange.shade200` untuk tombol "Orange") dan kemudian kembali ke **NavigationFirst** dengan mengirimkan nilai warna tersebut menggunakan `Navigator.pop(context, color)`. Di **NavigationFirst**, nilai warna yang dikirimkan akan diterima oleh `Navigator.push()` dan mengubah **background color** aplikasi menggunakan `setState()`, sesuai dengan warna yang dipilih di **NavigationSecond**. Namun, terdapat bug di **NavigationSecond**, di mana variabel **color** tidak diberi nilai awal, yang bisa menyebabkan error. Seharusnya, variabel **color** diberi nilai default (misalnya `color = Colors.orange`) untuk menghindari masalah tersebut. Dengan perbaikan ini, setelah menekan tombol di **NavigationSecond**, aplikasi akan kembali ke **NavigationFirst** dengan background yang berubah sesuai dengan pilihan warna dari tombol yang ditekan.
 
   Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W12: Soal 16".
+
+## Praktikum 9 : Memanfaatkan async/await dengan Widget Dialog
+### Langkah 1 : Buat file baru navigation dialog.dart
+Buat file dart baru di folder lib project Anda.
+
+### Langkah 2 : Isi kode navigation_dialog.dart
+```dart
+import 'package:flutter/material.dart';
+
+class NavigationDialogScreen extends StatefulWidget {
+  const NavigationDialogScreen({super.key});
+
+  @override
+  State<NavigationDialogScreen> createState() => _NavigationDialogScreenState();
+}
+
+class _NavigationDialogScreenState extends State<NavigationDialogScreen> {
+  Color color = Colors.green.shade400;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: color,
+      appBar: AppBar(
+        title: const Text('Navigation Dialog Screen Zaki'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          child: const Text('Change Color'),
+          onPressed: () {
+          },
+        ),
+      ),
+    );
+  } }
+```
+
+### Langkah 3 : Tambah method async
+```dart
+_showColorDialog(BuildContext context) async {
+    await showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          title: const Text('Very important question'),
+          content: const Text('Please choose a color'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Orange'),
+              onPressed: () {
+                color = Colors.orange.shade200;
+                Navigator.pop(context, color);
+              },
+            ),
+            TextButton(
+              child: const Text('Cyan'),
+              onPressed: () {
+                color = Colors.cyan.shade300;
+                Navigator.pop(context, color);
+              },
+            ),
+            TextButton(
+                child: const Text('Lime'),
+                onPressed: () {
+                  color = Colors.lime.shade200;
+                  Navigator.pop(context, color);
+                }),
+          ],
+        );
+      },
+    );
+    setState(() {});
+  }
+```
+
+### Langkah 4 : Panggil method di ElevatedButton
+```dart
+onPressed: () {
+            _showColorDialog(context);
+          },
+```
+
+### Langkah 5 : Edit main.dart
+Ubah properti home
+```dart
+home: const NavigationDialog(),
+```
+
+### Langkah 6 : Run
+Coba ganti warna background dengan widget dialog tersebut. Jika terjadi error, silakan diperbaiki. Jika berhasil, akan tampil seperti gambar berikut.
+
+  Soal 17
+  Cobalah klik setiap button, apa yang terjadi ? Mengapa demikian ?
+  Gantilah 3 warna pada langkah 3 dengan warna favorit Anda!
+
+  - Jawab
+
+   ![alt text](image-20.png)
+
+  Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W12: Soal 17".
