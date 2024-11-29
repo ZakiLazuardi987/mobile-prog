@@ -522,6 +522,8 @@ Future _navigateAndGetColor(BuildContext context) async {
 
 ### Langkah 4 : Buat file baru navigation_second.dart
 
+![alt text](image-17.png)
+
 ### Langkah 5 : Buat class NavigationSecond dengan StatefulWidget
 ```dart
 import 'package:flutter/material.dart';
@@ -576,7 +578,19 @@ home: const NavigationFirst(),
 ```
 
 ### Langkah 7 : Run
+
+- Hasil
+
+![alt text](image-16.png)
+
+
+
   Soal 16
   Cobalah klik setiap button, apa yang terjadi ? Mengapa demikian ?
   Gantilah 3 warna pada langkah 5 dengan warna favorit Anda!
+
+  - Jawab
+
+    Ketika kamu mengklik tombol di **NavigationSecond**, seperti tombol "Orange", "Cyan", atau "Lime", setiap tombol akan mengubah nilai variabel **color** menjadi warna tertentu (misalnya `Colors.orange.shade200` untuk tombol "Orange") dan kemudian kembali ke **NavigationFirst** dengan mengirimkan nilai warna tersebut menggunakan `Navigator.pop(context, color)`. Di **NavigationFirst**, nilai warna yang dikirimkan akan diterima oleh `Navigator.push()` dan mengubah **background color** aplikasi menggunakan `setState()`, sesuai dengan warna yang dipilih di **NavigationSecond**. Namun, terdapat bug di **NavigationSecond**, di mana variabel **color** tidak diberi nilai awal, yang bisa menyebabkan error. Seharusnya, variabel **color** diberi nilai default (misalnya `color = Colors.orange`) untuk menghindari masalah tersebut. Dengan perbaikan ini, setelah menekan tombol di **NavigationSecond**, aplikasi akan kembali ke **NavigationFirst** dengan background yang berubah sesuai dengan pilihan warna dari tombol yang ditekan.
+
   Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W12: Soal 16".
