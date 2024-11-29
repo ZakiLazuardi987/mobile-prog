@@ -459,3 +459,124 @@ else if (snapshot.connectionState == ConnectionState.done) {
   - Jawab :
 
     Pada Langkah 5, penambahan penanganan error dengan menggunakan snapshot.hasError di dalam FutureBuilder memberikan kemampuan untuk menangani dan menampilkan pesan error jika terjadi masalah selama pengambilan data asinkron (misalnya, kesalahan saat meminta izin lokasi atau jika layanan lokasi tidak tersedia).
+
+## Praktikum 8 : Navigation Route dengan Future Function
+### Langkah 1 : Buat file baru navigation_first.dart
+Buatlah file baru ini di project lib Anda.
+
+### Langkah 2 : Isi kode navigation_first.dart
+```dart
+import 'package:flutter/material.dart';
+
+class NavigationFirst extends StatefulWidget{
+  const NavigationFirst({super.key});
+
+  @override
+  State<NavigationFirst> createState() => _NavigationFirstState();
+}
+
+class _NavigationFirstState extends State<NavigationFirst> {
+  Color color = Colors.blue.shade700;
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Navigation First Screen'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          child: const Text('Change Color'),
+          onPressed: () {
+            _navigateAndGetColor(context);
+          }),
+        ),
+      );
+  }
+}
+```
+
+  Soal 15
+  Tambahkan nama panggilan Anda pada tiap properti title sebagai identitas pekerjaan Anda.
+  Silakan ganti dengan warna tema favorit Anda.
+
+  - Jawab :
+  ```dart
+  Color color = const Color.fromARGB(255, 255, 234, 0);
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Navigation First Screen Zaki'),
+      ),
+  ```
+
+### Langkah 3 : Tambah method di class _NavivationFirstState
+```dart 
+Future _navigateAndGetColor(BuildContext context) async {
+   color = await Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const NavigationSecond()),) ?? Colors.blue;
+   setState(() {});
+   });
+}
+```
+
+### Langkah 4 : Buat file baru navigation_second.dart
+
+### Langkah 5 : Buat class NavigationSecond dengan StatefulWidget
+```dart
+import 'package:flutter/material.dart';
+
+class NavigationSecond extends StatefulWidget {
+  const NavigationSecond({super.key});
+
+  @override
+  State<NavigationSecond> createState() => _NavigationSecondState();
+}
+
+class _NavigationSecondState extends State<NavigationSecond> {
+  @override
+  Widget build(BuildContext context) {
+    Color color;
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Navigation Second Screen'),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                  child: const Text('Red'),
+                  onPressed: () {
+                    color = Colors.red.shade700;
+                    Navigator.pop(context, color);
+                  }),
+              ElevatedButton(
+                  child: const Text('Green'),
+                  onPressed: () {
+                    color = Colors.green.shade700;
+                    Navigator.pop(context, color);
+                  }),
+              ElevatedButton(
+                  child: const Text('Blue'),
+                  onPressed: () {
+                    color = Colors.blue.shade700;
+                    Navigator.pop(context, color);
+                  }),
+            ],
+          ),
+        ));
+  }
+}
+```
+
+### Langkah 6 : Edit main.dart
+```dart
+home: const NavigationFirst(),
+```
+
+### Langkah 7 : Run
+  Soal 16
+  Cobalah klik setiap button, apa yang terjadi ? Mengapa demikian ?
+  Gantilah 3 warna pada langkah 5 dengan warna favorit Anda!
+  Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W12: Soal 16".
